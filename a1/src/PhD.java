@@ -30,7 +30,7 @@ public class PhD {
 		month = m;
 		year= y;
 		assert n.length() > 0;
-		assert m != null;
+		assert n != null;
 		assert m >= 1;
 		assert m <= 12;
 		// TODO: figure out if we need to initiate the other variables
@@ -46,7 +46,7 @@ public class PhD {
 		advisor1 = adv1;
 		adv1.numAdvisees++;
 		assert n.length() > 0;
-		assert m != null;
+		assert n != null;
 		assert m >= 1;
 		assert m <= 12;
 		assert adv1 != null;
@@ -66,7 +66,7 @@ public class PhD {
 		adv1.numAdvisees++;
 		adv2.numAdvisees++;
 		assert n.length() > 0;
-		assert m != null;
+		assert n != null;
 		assert m >= 1;
 		assert m <= 12;
 		assert adv1 != null;
