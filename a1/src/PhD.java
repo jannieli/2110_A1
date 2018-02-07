@@ -2,8 +2,8 @@
  An instance maintains info about the PhD of a person. */
 public class PhD {
 
+	/** Name of the person with a PhD, a String of length > 0.*/ //DO THIS FOR ALL (bc javadoc)
 	private String name; 
-	// Name of the person with a PhD, a String of length > 0.
 	
 	private int month;  
 	// month PhD was awarded. In 1..12, with 1 meaning January, etc
