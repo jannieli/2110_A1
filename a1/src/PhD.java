@@ -2,24 +2,24 @@
  An instance maintains info about the PhD of a person. */
 public class PhD {
 
-	/** Name of the person with a PhD, a String of length > 0.*/ //DO THIS FOR ALL (bc javadoc)
+	/** Name of the person with a PhD, a String of length > 0.*/
 	private String name; 
 	
+	/** month PhD was awarded. In 1..12, with 1 meaning January, etc*/
 	private int month;  
-	// month PhD was awarded. In 1..12, with 1 meaning January, etc
 	
+	/** year PhD was awarded. Can be any integer.*/
 	private int year;
-	// year PhD was awarded. Can be any integer.
 	
+	/** the first PhD advisor of this person —null if unknown*/
 	private PhD advisor1;
-	// the first PhD advisor of this person —null if unknown
 	
+	/** The second advisor of this person —null if unknown or if the
+	 *  person has less than two advisors.*/
 	private PhD advisor2;
-	// The second advisor of this person —null if unknown or if the
-	// person has less than two advisors.
 	
+	/** number of PhD advisees of this person. Can be any integer.*/
 	private int numAdvisees;
-	// number of PhD advisees of this person. Can be any integer.
 	
 	
 	/**Constructor: an instance for a person with name n, PhD month m, 
