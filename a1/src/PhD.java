@@ -29,6 +29,10 @@ public class PhD {
 		name = n;
 		month = m;
 		year= y;
+		assert n.length() > 0;
+		assert m != null;
+		assert m >= 1;
+		assert m <= 12;
 		// TODO: figure out if we need to initiate the other variables
 	}
 	
@@ -41,6 +45,12 @@ public class PhD {
 		year = y;
 		advisor1 = adv1;
 		adv1.numAdvisees++;
+		assert n.length() > 0;
+		assert m != null;
+		assert m >= 1;
+		assert m <= 12;
+		assert adv1 != null;
+		assert adv2 == null;
 	}
 	
 	/** Constructor: a PhD with name n, PhD month m, PhD year y, first advisor
@@ -55,6 +65,13 @@ public class PhD {
 		advisor2 = adv2;
 		adv1.numAdvisees++;
 		adv2.numAdvisees++;
+		assert n.length() > 0;
+		assert m != null;
+		assert m >= 1;
+		assert m <= 12;
+		assert adv1 != null;
+		assert adv2 != null;
+		assert adv1 != adv2;
 	}
 	
 	/**Return the name of this person.*/
@@ -91,6 +108,8 @@ public class PhD {
 	/**Add p as the first advisor of this person. 
 	 * Precondition: the first advisor is unknown and p is not null.*/
 	public void setAdvisor1(PhD p) {
+		assert p != null;
+		assert advisor1() == null;
 		advisor1 = p;
 		//TODO: Check if we should add an advisee to p
 		p.numAdvisees++;
@@ -100,6 +119,10 @@ public class PhD {
 	 * Precondition: The first advisor (of this person) is known, the second advisor
 	 * is unknown, p is not null, and p is different from the first advisor*/
 	public void setAdvisor2(PhD p) {
+		assert advisor1() != null;
+		assert advisor2() == null;
+		assert p != null;
+		assert p != advisor1();
 		advisor2 = p;
 		//TODO: Check if we should add an advisee to p
 		p.numAdvisees++;
@@ -120,6 +143,7 @@ public class PhD {
 	/** Return value of "this person and p are intellectual siblings."
 	 * Precondition: p is not null */
 	public boolean areSiblings(PhD p) {
+		assert p != null;
 		return (this != p) && 
 				((advisor1() != null) || (advisor2() != null)) &&
 				((p.advisor1() == advisor1()) || (p.advisor2() == advisor2()) 
