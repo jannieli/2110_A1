@@ -1,112 +1,137 @@
-import static org.junit.jupiter.api.Assertions.*;
+/** NetId: jl2578, ry86. Time spent: 02 hours, 30 minutes.
+ An instance maintains info about the PhD of a person. */
+public class PhD {
 
-import org.junit.jupiter.api.Test;
-
-class PhDTest {
-
-	@Test
-	void testConstructor1() {
-		PhD dr = new PhD("Gries", 12, 1966);
-		
-		
-		assertEquals("Gries", dr.name());
-		assertEquals(12, dr.month());
-		assertEquals(1966, dr.year());
-		assertEquals(null, dr.advisor1());
-		assertEquals(null, dr.advisor2());
-		assertEquals(0, dr.numAdvisees());
+	
+	private String name; // Name of the person with a PhD, a String of length > 0.
+	
+	private int month; // month PhD was awarded. In 1..12, with 1 meaning January, etc
+	
+	private int year; // year PhD was awarded. Can be any integer.
+	
+	private PhD advisor1; // the first PhD advisor of this person —null if unknown
+	
+	private PhD advisor2; // The second advisor of this person —null if unknown or if the
+	 						//	person has less than two advisors.
+	
+	private int numAdvisees; // number of PhD advisees of this person. Can be any integer.
+	
+	
+	/**Constructor: an instance for a person with name n, PhD month m, 
+	 * PhD year y. Its advisors are unknown, and it has no advisees.
+	 * Precondition: n has at least 1 char and m is in 1..12.*/
+	public PhD(String n, int m, int y) {
+		assert n != null && n.length() >= 1;
+		assert m >= 1 && m <= 12;
+		name = n;
+		month = m;
+		year= y;
 	}
 	
-	@Test
-	void testGroupB() {
-		// TODO: test numadvisees
-		PhD ramya = new PhD("Ramya", 9, 2059);
-		PhD attell = new PhD("Kevin", 3, 1980);
-		ramya.setAdvisor1(attell);
-		assertEquals(1, attell.numAdvisees());
-		assertEquals(attell, ramya.advisor1());
-		
-		PhD gries = new PhD("Gries", 12, 1966);
-		ramya.setAdvisor2(gries);
-		gries.setAdvisor1(attell);
-		assertEquals(1, gries.numAdvisees());
-		assertEquals(2, attell.numAdvisees());
-		assertEquals(gries, ramya.advisor2());
-		assertEquals(attell, gries.advisor1());
+	/**Constructor: a PhD with name n, PhD month m, PhD year y, first advisor
+	 * adv1, and no second advisor.
+	 * Precondition: n has at least 1 char, m is in 1..12, and adv1 is not null*/
+	public PhD(String n, int m, int y, PhD adv1) {
+		assert n.length() > 0 && n != null;
+		assert m >= 1 && m <= 12;
+		assert adv1 != null;
+		name = n;
+		month = m;
+		year = y;
+		advisor1 = adv1;
+		adv1.numAdvisees++;
 	}
 	
-	@Test
-	void testGroupCC() {
-		PhD stoer = new PhD("Joseph", 4, 1919);
-		PhD karen = new PhD("Karen", 10, 2018);
-		PhD bauer = new PhD("Friedrich", 2, 1927, stoer);
-		
-		//start test with constructor 2 
-		assertEquals("Friedrich", bauer.name());
-		assertEquals(2, bauer.month());
-		assertEquals(1927, bauer.year());
-		assertEquals(stoer, bauer.advisor1());
-		assertEquals(null, bauer.advisor2());
-		assertEquals(0, bauer.numAdvisees());
-
-		PhD dr = new PhD("Gries", 12, 1966, bauer, stoer);
-		//start test constructor 3
-		assertEquals("Gries", dr.name());
-		assertEquals(12, dr.month());
-		assertEquals(1966, dr.year());
-		assertEquals(bauer, dr.advisor1());
-		assertEquals(stoer, dr.advisor2());
-		assertEquals(0, dr.numAdvisees());
+	/** Constructor: a PhD with name n, PhD month m, PhD year y, first advisor
+	 * adv1, and second advisor adv2.
+	 * Precondition: n has at least 1 char, m is in 1..12,
+	 * adv1 and adv2 are not null, and adv1 and adv2 are different.*/
+	public PhD(String n, int m, int y, PhD adv1, PhD adv2) {
+		assert n.length() > 0 && n != null;
+		assert m >= 1 && m <= 12;
+		assert adv1 != null;
+		assert adv2 != null;
+		assert adv1 != adv2;
+		name = n;
+		month = m;
+		year = y;
+		advisor1 = adv1;
+		advisor2 = adv2;
+		adv1.numAdvisees++;
+		adv2.numAdvisees++;
 	}
 	
-	@Test
-	void testGroupD() {
-		PhD stoer = new PhD("Joseph", 4, 1919);
-		PhD bauer = new PhD("Friedrich", 4, 1919, stoer);
-		PhD gries = new PhD("Gries", 3, 1919, bauer, stoer);
-		PhD ramya = new PhD("cheese", 5, 1919);
-		PhD denice = new PhD("Denice", 3, 1918);
-		PhD dave = new PhD("Happy", 2, 1918);
-		PhD attell = new PhD("Kevin", 4, 1918);
-		PhD karen = new PhD("Zhang", 3, 1920);
-		PhD shreya = new PhD("A+", 2, 1920);
-		PhD jannie = new PhD("A++", 4, 1920);
-		
-		//test hasAdvisee
-		assertEquals(true, stoer.hasAdvisee());
-		assertEquals(true, bauer.hasAdvisee());
-		assertEquals(false, gries.hasAdvisee());
-		
-		//test gotAfter
-		assertEquals(false, stoer.gotAfter(null));
-		
-		assertEquals(false, stoer.gotAfter(bauer));
-		assertEquals(true, stoer.gotAfter(gries)); 
-		assertEquals(true, ramya.gotAfter(gries));
-		
-		assertEquals(false, denice.gotAfter(gries));
-		assertEquals(false, dave.gotAfter(gries));
-		assertEquals(true, attell.gotAfter(denice));
-		
-		assertEquals(true, karen.gotAfter(gries));
-		assertEquals(true, shreya.gotAfter(gries));
-		assertEquals(true, jannie.gotAfter(gries));
-		
-				
-		//test areSiblings
-		PhD griesBro = new PhD("GriesBro", 12, 1966, bauer);
-		PhD crying = new PhD("sobbing", 12, 1955, bauer, stoer);
-		PhD existential = new PhD("crisis", 12, 1929, stoer);
-		PhD confused = new PhD("assignment", 12, 1231, griesBro, stoer);
-		
-		assertEquals(false, bauer.areSiblings(bauer));
-		assertEquals(false, ramya.areSiblings(denice));
-		assertEquals(true, crying.areSiblings(griesBro));
-		assertEquals(true, crying.areSiblings(existential));
-		assertEquals(true, confused.areSiblings(existential));
-		assertEquals(true, crying.areSiblings(confused));
-				
+	/**Return the name of this person.*/
+	public String name() {
+		return name;
 	}
 	
+	/**Return the month this person got their PhD.*/
+	public int month() {
+		return month;
+	}
+	
+	/**Return the year this person got their PhD.*/
+	public int year() {
+		return year;
+	}
+	
+	/**Return the first advisor of this PhD (null if unknown).*/
+	public PhD advisor1() {
+		return advisor1;
+	}
+	
+	/**Return the second advisor of this PhD (null if unknown or 
+	 * non-existent).*/
+	public PhD advisor2() {
+		return advisor2;
+	}
+	
+	/**Return the number of PhD advisees of this person.*/
+	public int numAdvisees() {
+		return numAdvisees;
+	}
+	
+	/**Add p as the first advisor of this person. 
+	 * Precondition: the first advisor is unknown and p is not null.*/
+	public void setAdvisor1(PhD p) {
+		assert p != null;
+		assert advisor1() == null;
+		advisor1 = p;
+		p.numAdvisees++;
+	}
+	
+	/**Add p as the second advisor of this person.
+	 * Precondition: The first advisor (of this person) is known, the second advisor
+	 * is unknown, p is not null, and p is different from the first advisor*/
+	public void setAdvisor2(PhD p) {
+		assert advisor1() != null;
+		assert advisor2() == null;
+		assert p != null;
+		assert p != advisor1();
+		advisor2 = p;
+		p.numAdvisees++;
+	}
+	
+	/** Return value of "this PhD has at least one advisee", 
+	 * i.e. true if this PhD has at least one advisee and false otherwise */
+	public boolean hasAdvisee() {
+		return numAdvisees() >= 1;
+	}
+	
+	/** Return value of "p is not null and this person got the PhD after p." */
+	public boolean gotAfter(PhD p) {
+		return (p != null) && ((year() == p.year() && month() > p.month()) ||
+				(year() > p.year()));
+	}
+	
+	/** Return value of "this person and p are intellectual siblings."
+	 * Precondition: p is not null */
+	public boolean areSiblings(PhD p) {
+		assert p != null;
+		return (this != p) && 
+				((advisor1() != null && (advisor1() == p.advisor1() || advisor1() == p.advisor2()) ||
+				(advisor2() != null && (advisor2() == p.advisor1() || advisor2() == p.advisor2()))));			
+	}
 
 }
